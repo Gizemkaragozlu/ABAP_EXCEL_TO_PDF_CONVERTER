@@ -1,7 +1,7 @@
-CLASS  zcl_excel_pdf_converter DEFINITION
+CLASS zcl_excel_pdf_converter DEFINITION
   PUBLIC
   FINAL
-CREATE PUBLIC .
+  CREATE PUBLIC .
   PUBLIC SECTION.
     CLASS-METHODS:
       get_instance
@@ -22,70 +22,70 @@ CLASS ZCL_EXCEL_PDF_CONVERTER IMPLEMENTATION.
 
 
   METHOD convert.
-* OLE için gerekli include
+* Include necessary for OLE
     INCLUDE ole2incl.
-* OLE nesne tutucuları
-    DATA: lo_excel_application TYPE ole2_object, " Excel uygulama nesnesi
-          lo_workbooks         TYPE ole2_object, " Çalışma kitapları koleksiyonu
-          lo_workbook          TYPE ole2_object, " Tek bir çalışma kitabı
-          lo_worksheet         TYPE ole2_object, " Çalışma sayfası nesnesi
-          lo_cells             TYPE ole2_object, " Hücre nesnesi
-          lo_columns           TYPE ole2_object. " Sütun nesnesi
-    " Excel uygulamasını oluştur
+* OLE object holders
+    DATA: lo_excel_application TYPE ole2_object, " Excel application object
+          lo_workbooks         TYPE ole2_object, " Collection of workbooks
+          lo_workbook          TYPE ole2_object, " Single workbook object
+          lo_worksheet         TYPE ole2_object, " Worksheet object
+          lo_cells             TYPE ole2_object, " Cells object
+          lo_columns           TYPE ole2_object. " Columns object
+    " Create Excel application
     CREATE OBJECT lo_excel_application 'EXCEL.APPLICATION'.
-    " Excel uygulamasını görünür yap
+    " Make Excel application visible
     SET PROPERTY OF lo_excel_application 'Visible' = 1.
-    " Çalışma kitapları koleksiyonunu al
+    " Get the collection of workbooks
     CALL METHOD OF lo_excel_application 'Workbooks' = lo_workbooks.
-    " Belirtilen çalışma kitabını aç
+    " Open the specified workbook
     CALL METHOD OF lo_workbooks 'Open'
       EXPORTING
         #1 = source.
-    " İlk çalışma kitabını al
+    " Get the first workbook
     CALL METHOD OF lo_workbooks 'Item' = lo_workbook
     EXPORTING
       #1 = 1.
-    " İlk çalışma sayfasını al
+    " Get the first worksheet
     CALL METHOD OF lo_workbook 'Worksheets' = lo_worksheet
     EXPORTING
       #1 = 1.
-    " Hücreleri al
+    " Get cells
     CALL METHOD OF lo_worksheet 'Cells' = lo_cells.
-    " Sütunları seç ve genişliklerini otomatik ayarla
+    " Select columns and auto-fit their widths
     CALL METHOD OF lo_cells 'EntireColumn' = lo_columns.
     CALL METHOD OF lo_columns 'AutoFit'.
-*.CenterHeader = ""                " Üst Merkez Başlığı = ""
-*.RightHeader = ""                 " Üst Sağ Başlık = ""
-*.LeftFooter = ""                  " Alt Sol Altbilgi = ""
-*.CenterFooter = ""                " Alt Merkez Altbilgi = ""
-*.RightFooter = ""                 " Alt Sağ Altbilgi = ""
-*.PrintHeadings = False            " Başlıkları Yazdır = Yanlış
-*.PrintGridlines = False           " Izgara Çizgilerini Yazdır = Yanlış
-*.CenterHorizontally = False       " Yatayda Merkezle = Yanlış
-*.CenterVertically = False         " Düşeyde Merkezle = Yanlış
-*.Draft = False                    " Taslak Modu = Yanlış
-*.BlackAndWhite = False            " Siyah-Beyaz Yazdır = Yanlış
-*.Zoom = False                     " Yakınlaştırma = Yanlış
-*.FitToPagesWide = 1               " Sayfaların Genişliğine Sığdır = 1
-*.FitToPagesTall = 1               " Sayfaların Uzunluğuna Sığdır = 1
-    " Sayfa düzeni ayarlarını yapılandır
+*.CenterHeader = ""                " Center Header = ""
+*.RightHeader = ""                 " Right Header = ""
+*.LeftFooter = ""                  " Left Footer = ""
+*.CenterFooter = ""                " Center Footer = ""
+*.RightFooter = ""                 " Right Footer = ""
+*.PrintHeadings = False            " Print Headings = False
+*.PrintGridlines = False           " Print Gridlines = False
+*.CenterHorizontally = False       " Center Horizontally = False
+*.CenterVertically = False         " Center Vertically = False
+*.Draft = False                    " Draft Mode = False
+*.BlackAndWhite = False            " Black and White Print = False
+*.Zoom = False                     " Zoom = False
+*.FitToPagesWide = 1               " Fit to Width of Pages = 1
+*.FitToPagesTall = 1               " Fit to Height of Pages = 1
+    " Configure page layout settings
     CALL METHOD OF lo_excel_application 'ExecuteExcel4Macro'
       EXPORTING
         #1 = 'PAGE.SETUP(,,,,,,,,,,,,{1,0})'.
-    " Çalışma kitabını PDF formatında dışa aktar
+    " Export the workbook as a PDF
     CALL METHOD OF lo_workbook 'ExportAsFixedFormat'
       EXPORTING
         #1 = 0        " xlTypePDF
-        #2 = destination. " Çıktı PDF dosyasının yolu
-    " Çalışma kitabını kaydetmeden kapat
+        #2 = destination. " Path for the output PDF
+    " Close the workbook without saving
     CALL METHOD OF lo_workbook 'Close'
       EXPORTING
-        #1 = 0.       " Kaydetme = False
-    " Excel uygulamasını görünür yap
+        #1 = 0.       " Save changes = False
+    " Make the Excel application visible
     SET PROPERTY OF lo_excel_application 'Visible' = 1.
-    " Excel uygulamasını kapat
+    " Quit the Excel application
     CALL METHOD OF lo_excel_application 'Quit'.
-    " OLE nesnesini serbest bırak
+    " Release the OLE object
     FREE OBJECT lo_excel_application.
   ENDMETHOD.
 
@@ -97,3 +97,4 @@ CLASS ZCL_EXCEL_PDF_CONVERTER IMPLEMENTATION.
     ro_instance = instance.
   ENDMETHOD.
 ENDCLASS.
+
