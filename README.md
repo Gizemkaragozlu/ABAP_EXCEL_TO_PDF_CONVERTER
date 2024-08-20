@@ -70,11 +70,5 @@ lo_converter->convert(
 
 ## License
 
-This code is provided "as-is" without warranties or guarantees. Use it at your own risk. 
+This project is licensed under the [MIT License](LICENSE). See the LICENSE file for details.
 
-## Contact
-
-For issues or questions, please contact [Your Contact Information].
-
-
-Feel free to customize the README to better suit your needs or add any additional information that might be useful.
