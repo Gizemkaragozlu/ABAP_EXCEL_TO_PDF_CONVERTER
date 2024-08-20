@@ -2,7 +2,7 @@
 
 ## Overview
 
-This ABAP program converts an Excel file to a PDF format using OLE automation in SAP. It provides a class `zcl_excel_to_pdf_converter` with methods to perform the conversion. The class uses OLE (Object Linking and Embedding) to interact with Microsoft Excel, manipulate the spreadsheet, and export it as a PDF.
+This ABAP program converts an Excel file to a PDF format using OLE automation in SAP. It provides a class `ZCL_EXCEL_PDF_CONVERTER` with methods to perform the conversion. The class uses OLE (Object Linking and Embedding) to interact with Microsoft Excel, manipulate the spreadsheet, and export it as a PDF.
 
 ## Prerequisites
 
@@ -32,7 +32,7 @@ PARAMETERS: p_source TYPE string LOWER CASE. " Path to source Excel file
 PARAMETERS: p_dest   TYPE string LOWER CASE. " Path to output PDF file
 
 START-OF-SELECTION.
-  zcl_excel_to_pdf_converter=>get_instance( )->convert(
+  ZCL_EXCEL_PDF_CONVERTER=>get_instance( )->convert(
     EXPORTING
       source      = p_source
       destination = p_dest ).
@@ -40,7 +40,7 @@ START-OF-SELECTION.
 
 ## Class Definition
 
-### `zcl_excel_to_pdf_converter`
+### `ZCL_EXCEL_PDF_CONVERTER`
 
 #### Methods
 
@@ -50,7 +50,7 @@ START-OF-SELECTION.
 ### Usage Example
 
 ```abap
-DATA(lo_converter) = zcl_excel_to_pdf_converter=>get_instance( ).
+DATA(lo_converter) = ZCL_EXCEL_PDF_CONVERTER=>get_instance( ).
 lo_converter->convert(
   EXPORTING
     source      = 'C:\path\to\source.xlsx'
