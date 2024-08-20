@@ -32,7 +32,7 @@ PARAMETERS: p_source TYPE string LOWER CASE. " Path to source Excel file
 PARAMETERS: p_dest   TYPE string LOWER CASE. " Path to output PDF file
 
 START-OF-SELECTION.
-  ZCL_EXCEL_PDF_CONVERTER=>get_instance( )->convert(
+  zcl_excel_pdf_converter=>get_instance( )->convert(
     EXPORTING
       source      = p_source
       destination = p_dest ).
@@ -50,7 +50,8 @@ START-OF-SELECTION.
 ### Usage Example
 
 ```abap
-DATA(lo_converter) = ZCL_EXCEL_PDF_CONVERTER=>get_instance( ).
+data(lo_converter) = zcl_excel_pdf_converter=>get_instance( ).
+
 lo_converter->convert(
   EXPORTING
     source      = 'C:\path\to\source.xlsx'
