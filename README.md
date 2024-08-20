@@ -63,11 +63,6 @@ lo_converter->convert(
 - Ensure that the path to the Excel file and the destination PDF file are accessible and writable by the SAP system.
 - This code uses OLE automation, which requires Microsoft Excel to be installed and configured properly on the machine where the SAP system is running.
 
-## Troubleshooting
-
-- **Excel Application Not Visible**: Ensure that the Excel application is properly installed and not blocked by security settings.
-- **Path Issues**: Verify that the paths provided are correct and accessible.
-
 ## License
 
 This project is licensed under the [MIT License](LICENSE). See the LICENSE file for details.
